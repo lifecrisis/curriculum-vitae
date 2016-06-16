@@ -1,0 +1,1224 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+\RequirePackage[T1]{fontenc}
+
+% LaTeX will typeset using Computer Modern Roman, which a lot of
+% non-mathematicians and non-engineers won't like. Also, a few PDF
+% viewers may not render CMR very well. Instead, Times New Roman can
+% be used. That's what this package does.
+\usepackage{times}
+
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+% (NOTE: This requires the times package above)
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+% This package helps LaTeX auto-hyphenate hyphenated words if you use
+% special hyphens. For example, bio\-/mimicry will properly hyphenate
+% ``mimicry'' if necessary.
+\usepackage[shortcuts]{extdash}
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+% Provides special list environments and macros to create new ones
+\usepackage[shortlabels]{enumitem}
+
+% Simpler bibsections for CV sections
+% (thanks to natbib for inspiration)
+%
+% * For lists of references with hanging indents and no numbers:
+%
+%   \begin{bibsection}
+%       \item ...
+%   \end{bibsection}
+%
+% * For numbered lists of references (with hanging indents):
+%
+%   \begin{bibenum}
+%       \item ...
+%   \end{bibenum}
+%
+%   Note that bibenum numbers continuously throughout. To reset the
+%   counter, use
+%
+%   \restartlist{bibenum}
+%
+%   at the place where you want the numbering to reset.
+
+\makeatletter
+\newlength{\bibhang}
+\setlength{\bibhang}{1em}
+\newlength{\bibsep}
+ {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+\newlist{bibsection}{itemize}{3}
+\setlist[bibsection]{label=,leftmargin=\bibhang,%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\newlist{bibenum}{enumerate}{3}
+\setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+        itemindent=-\bibhang,
+        itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+        topsep=0pt}
+\let\oldendbibenum\endbibenum
+\def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+\let\oldendbibsection\endbibsection
+\def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+\makeatother
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% HEADING AT TOP OF CURRICULUM VITAE
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[{\includegraphics[height=1.5in]{my_picture}}]{Your Name}
+%
+% the picture will be flush right across from the name. For this example
+% to work, make sure the extra set of curly braces is included. Also
+% makes ure that \usepackage{graphicx} is somewhere in the preamble.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+%%% SECTION HEADINGS
+
+% The section headings. Flush left in small caps down pseudo-margin.
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\hyphenpenalty=10000\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+%%% LISTS
+
+% This macro alters a list by removing some of the space that follows the list
+% (is used by lists below)
+\newcommand*\fixendlist[1]{%
+    \expandafter\let\csname preFixEndListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixEndListend#1\endcsname\vspace{-0.6\baselineskip}}}
+
+% These macros help ensure that items in outer-type lists do not get
+% separated from the next line by a page break
+% (they are used by lists below)
+\let\originalItem\item
+\newcommand*\fixouterlist[1]{%
+    \expandafter\let\csname preFixOuterList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\def\item{\pagebreak[2]\oldItem}\csname preFixOuterList#1\endcsname}
+    \expandafter\let\csname preFixOuterListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\let\item\oldItem\csname preFixOuterListend#1\endcsname}}
+\newcommand*\fixinnerlist[1]{%
+    \expandafter\let\csname preFixInnerList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\let\item\originalItem\csname preFixInnerList#1\endcsname}
+    \expandafter\let\csname preFixInnerListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixInnerListend#1\endcsname\let\item\oldItem}}
+
+% An itemize-style list with lots of space between items
+%
+% Usage:
+%   \begin{outerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{outerlist}
+\newlist{outerlist}{itemize}{3}
+    \setlist[outerlist]{label=\enskip\textbullet,leftmargin=*}
+    \fixendlist{outerlist}
+    \fixouterlist{outerlist}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{lonelist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{lonelist}
+\newlist{lonelist}{itemize}{3}
+    \setlist[lonelist]{label=\enskip\textbullet,leftmargin=*,partopsep=0pt,topsep=0pt}
+    \fixendlist{lonelist}
+    \fixouterlist{lonelist}
+
+% An itemize-style list with little space between items
+%
+% Usage:
+%   \begin{innerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{innerlist}
+\newlist{innerlist}{itemize}{3}
+    \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixinnerlist{innerlist}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{loneinnerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{loneinnerlist}
+\newlist{loneinnerlist}{itemize}{3}
+    \setlist[loneinnerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixendlist{loneinnerlist}
+    \fixinnerlist{loneinnerlist}
+
+%%% EXTRA SPACE
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+%%% FORMATTING MACROS
+
+% Provides a linked \doi{#1} that links doi:#1 to http://dx.doi.org/#1
+\usepackage{doi}
+% To change the text before the DOI, adjust this command
+%\renewcommand\doitext{doi:}
+
+% Provides a linked \url{#1} that doesn't require escape characters
+\usepackage{url}
+%\usepackage[stable]{footmisc}
+
+% You can adjust the style \url{} uses here:
+% (options are: same, rm, sf, tt; defaults to tt)
+\urlstyle{same}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+% (uncomment to typeset the e\-/mail address in typewriter font;
+%  otherwise, will be typeset in the \urlstyle above)
+%\DeclareUrlCommand\emaillink{\urlstyle{tt}}
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+
+% Custom hyphenation rules for words that LaTeX has trouble with
+\hyphenation{bio-mim-ic-ry bio-in-spi-ra-tion re-us-a-ble pro-vid-er Media-Wiki}
+
+\def\u{\underline}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Dr.~Lixin Li}
+
+\section{Contact Information}
+
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table. Table is one row made up of three parboxes. The left
+%       parbox has address info, the middle parbox has a vertical bar,
+%       and the right parbox has phone and electronic contact
+%       information.
+%
+% MACROS: \rcollength is the width of the right column of the table
+%             (adjust it to your liking; default is 1.85in).
+%         \spacewidth is width of area between left and right boxes.
+%
+\newlength{\rcollength}\setlength{\rcollength}{1.85in}%
+\newlength{\spacewidth}\setlength{\spacewidth}{20pt}
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
+
+% Address box
+\parbox{\textwidth-\rcollength-\spacewidth}{%
+Associate Professor\\
+\href{http://ceit.georgiasouthern.edu/cs/}{Department of Computer Sciences}\\
+\href{http://www.georgiasouthern.edu/}{Georgia Southern University}\\
+P.O. Box 7997\\
+Statesboro, GA  30460  USA}
+
+&
+% Uncomment to add a vertical bar in middle of contact information
+%{\vrule width 0.5pt}
+\parbox[m][5\baselineskip]{\spacewidth}{} &
+
+% Non-snail-mail contact information
+\parbox{\rcollength}{%
+\textit{Mobile:} 912-486-5827 \\
+%\textit{Fax:} +1-480-965-6899 \\
+\textit{E-mail:} \email{lli@georgiasouthern.edu}\\
+%\textit{WWW:} \href{http://www.tedpavlic.com/}{www.tedpavlic.com}
+}
+
+\end{tabular}
+
+%%
+%% In modern CV's, it seems like ``Objective'' is frowned upon. Instead,
+%% incorporate it into a well-constructed cover letter. The ``More
+%% information'' can go at the end of the CV, but it should not distract
+%% from the section giving references available to contact.
+%%
+%
+% \section{Objective}
+%
+% Placement in an academic position (i.e., faculty, postdoctoral, or
+% research scientist) that allows for advanced research in distributed
+% complex adaptive systems (i.e., modeling, analysis, design, and
+% verification) with a particular focus on the control of engineered
+% agents (e.g., for communications, control, software, electronics, and
+% sustainability) and the analysis of biological phenomena (e.g.,
+% self-organization, ecological rationality)
+% \begin{innerlist}
+% \item More information and auxiliary documents can be found at\\\url{http://www.tedpavlic.com/facjobsearch/}
+% \end{innerlist}
+
+%\section{Research Interests}
+%
+%\textbf{GIS (Geographic Information Systems), big data, databases}: spatiotemporal interpolation methods, geospatial big data, constraint databases, medical imaging
+
+\section{Professional Positions}
+
+\textbf{Associate Professor (tenured)} \hfill {August 2009 to present}
+\begin{innerlist}
+
+    \item[] \href{http://ceit.georgiasouthern.edu/cs/}{Department of Computer Sciences},
+            \href{http://www.georgiasouthern.edu/}{Georgia Southern University}
+\end{innerlist}
+
+\halfblankline
+
+\textbf{SAOT\footnote{SAOT is a graduate school of the German 
+excellence initiative, founded by the German Research Foundation (DFG). SAOT provides an interdisciplinary research and education program of excellence within a broad international network of distinguished experts to promote innovation and leadership in the areas.} Visiting Professor} \hfill {August 2012 to August 2013}
+\begin{innerlist}
+
+    \item[] \href{http://www5.cs.fau.de/}{Pattern Recognition Lab, \href{http://www.informatik.uni-erlangen.de}{Department of Computer Science}},
+            \href{http://www.uni-erlangen.org/}{Friedrich-Alexander University of Erlangen-Nuremberg, Germany}
+\end{innerlist}
+
+\halfblankline
+
+\halfblankline
+
+\textbf{\href{http://ceit.georgiasouthern.edu/cs/degrees/mscs/}{MS in Computer Science Program Director}} \hfill {April 2010 to April 2014}
+\begin{innerlist}
+
+    \item[] \href{http://ceit.georgiasouthern.edu/cs/}{Department of Computer Sciences},
+            \href{http://www.georgiasouthern.edu/}{Georgia Southern University}
+\end{innerlist}
+
+\halfblankline
+
+\textbf{Assistant Professor} \hfill {August 2003 to July 2009}
+\begin{innerlist}
+
+    \item[] \href{http://ceit.georgiasouthern.edu/cs/}{Department of Computer Sciences},
+            \href{http://www.georgiasouthern.edu/}{Georgia Southern University}
+\end{innerlist}
+
+\section{Education}
+
+\href{http://www.unl.edu/}{\textbf{University of Nebraska-Lincoln}},
+Lincoln, NE
+\begin{outerlist}
+
+\item[] Ph.D.,
+        \href{http://cse.unl.edu/}
+             {Computer Science},
+             May 2003
+\end{outerlist}
+
+\halfblankline
+
+\href{http://english.swjtu.edu.cn/}{\textbf{Southwest Jiaotong University}},
+Chengdu, China
+
+\begin{outerlist}
+\item[] M.S.,
+        \href{http://sist.swjtu.edu.cn:8080/}
+             {Computer Science}, December 1999
+             
+\item[] B.S.,
+        \href{http://sist.swjtu.edu.cn:8080/}
+             {Computer Engineering}, July 1997
+             
+\end{outerlist}
+
+% \section{Submitted Journal Publications}
+%
+% % Add a little space to nudge next ``Ref'd Journal Publications'' marginpar
+% % down to make room for tall ``Submitted Journal Publications''
+% % marginpar. If there are enough submitted journal publications, this
+% % space will not be needed (and should be removed).
+% \vspace{0.1in}
+
+\section{Refereed Journals, \\Books and \\Book Chapters}
+
+\begin{bibenum}
+
+\item Lixin~Li, Xiaolu~Zhou, Marc~Kalo, Reinhard~Piltner, Spatiotemporal Interpolation Methods for the Application of Estimating Population Exposure to Fine Particulate Matter PM$_{2.5}$ in the Contiguous U.S. and a Real-Time Web Application, {\it PLOS ONE},  17 pages, Public Library of Science, submitted.
+
+\item Lixin~Li, Constraint Databases and Data Interpolation, {\it
+Encyclopedia of Geographic Information System, 2nd edition}, Ed: Shashi
+Shekhar, Hui Xiong, Springer, accepted.
+
+\item Lixin~Li, Constraint Databases and Moving Objects, {\it
+Encyclopedia of Geographic Information System, 2nd edition}, Ed: Shashi
+Shekhar, Hui Xiong, Springer, accepted.
+
+\item Lixin~Li, Constraint Database Queries, {\it Encyclopedia of
+Geographic Information System, 2nd edition}, Ed: Shashi Shekhar, Hui Xiong, Springer, accepted.
+
+\item  \href{http://www.mdpi.com/1660-4601/11/9/9101}{Lixin~Li, Travis~Losser, Charles~Yorke, Reinhard~Piltner, Fast Inverse Distance Weighting-based Spatiotemporal Interpolation: A Web-based Application of Interpolating Daily Fine Particulate Matter PM$_{2.5}$ in the Contiguous U.S. using Parallel Programming and k-d Tree, {\it International Journal of Environmental Research and Public Health}, Vol. 11, No. 9,  9101-9141, 2014.}
+
+\item  Lixin~Li, Xingyou~Zhang, James~Holt, Jie~Tian, Reinhard~Piltner, 
+Estimating Population Exposure to Fine Particulate Matter in the Conterminous 
+U.S. using Shape Function-based Spatiotemporal Interpolation Method: 
+A County Level Analysis, {\it International Journal on Computing}, Vol. 1, No. 4, 
+24-30, 2012.
+
+\item Cheryl~Aasheim, Lixin~Li, Jordan~Shropshire, Christopher~Kadlec, 
+Knowledge and Skill Requirements for Entry-Level IT Workers: 
+A Longitudinal Survey, {\it Journal of Information Systems Education}, 
+Vol. 23, No. 2, 193-204, 2012.
+
+\item Cheryl~Aasheim, Paige~Rutner, Lixin~Li, Susan~Williams, Plagiarism 
+and Programming: A Survey of Student Attitudes, {\it Journal of Information 
+Systems Education}, Vol. 23, No. 3, 297-314, 2012.
+
+\item Lixin~Li, Spatiotemporal Interpolation Methods in GIS - Exploring Data 
+for Decision Making, VDM, 2009.
+
+\item Cheryl~Aasheim, Lixin~Li, Susan~Williams, Knowledge and
+Skill Requirements for Information Technology Graduates: a
+Comparison of Industry and Academia, {\it Journal of Information
+Systems Education}, Vol. 20, No. 3, 349-356, 2009.
+
+\item Lixin~Li, Xingyou~Zhang, Reinhard~Piltner, An Application of
+the Shape Function Based Spatiotemporal Interpolation Method on
+Ozone and Population Exposure in the Contiguous U.S., {\it Journal
+of Environmental Informatics}, Vol. 12, No. 2, 120-128, December 2008.
+
+\item Lixin~Li, Constraint Databases and Data Interpolation, {\it
+Encyclopedia of Geographic Information System}, Ed: Shashi
+Shekhar, Hui Xiong, 144-153, Springer, 2008.
+
+\item Lixin~Li, Constraint Databases and Moving Objects, {\it
+Encyclopedia of Geographic Information System}, Ed: Shashi
+Shekhar, Hui Xiong, 153-157, Springer, 2008.
+
+\item Lixin~Li, Constraint Database Queries, {\it Encyclopedia of
+Geographic Information System}, Ed: Shashi Shekhar, Hui Xiong,
+140-144, Springer, 2008.
+
+\item Lixin~Li and Peter~Revesz, Interpolation Methods for
+Spatio-temporal Geographic Data, {\it Journal of Computers,
+Environment and Urban Systems}, Vol. 28, 201-227, Elsevier, 2004.
+
+\item Lixin~Li, Youming~Li and Reinhard~Piltner, A New Shape
+Function Based Spatiotemporal Interpolation Method, {\it Lecture
+Notes in Computer Science}, Vol. 3074, 25-39, Springer, 2004.
+
+\item Peter~Revesz and Lixin~Li, Constraint-Based Visualization of
+Spatiotemporal Databases, {\it Advances in Geometric Modeling},
+Ed: Muhammad Sarfraz, 263-276, John Wiley, 2003.
+
+\item Lixin~Li and Peter~Revesz, A Comparison of Two
+Spatio-Temporal Interpolation Methods, {\it Lecture Notes in
+Computer Science}, Vol. 2478, 145-160, Springer, 2002.
+
+\item Huaxin~Zeng and Lixin~Li, Information Port and Its Basic
+Techniques, {\it Computer Applications}, Vol. 19, No. 10, 1-6,
+October 1999.
+
+\item Z.~Jiang, Lixin~Li and Huaxin~Zeng, A QOS Control Oriented
+Pricing Policy, {\it Computer Applications (Special Issue in
+Networks and MIS)}, November 1999.
+
+\item Huaxin~Zeng, Lixin~Li and Z.~Jiang, Further Research on the
+Construction of Chengdu Information Port CDIP-NET, {\it Computer
+Applications (Special Issue in Networks and MIS)}, 1-6, November
+1999.
+\end{bibenum}
+
+% Add a little space to nudge next ``Conference Publications'' marginpar
+% down to make room for tall ``Submitted Conference Publications''
+% marginpar. If there are enough submitted journal publications, this
+% space will not be needed (and should be removed).
+\vspace{0.1in}
+
+\section{Refereed Conference Proceedings}
+
+\begin{bibenum}
+
+\item Seonghoon~Kim, Lixin~Li, Haebum~Yun, Liuliu~Wu, Yong~Bai, Adam~Vaclavik, Developing a Real-Time Basis Construction Cost Estimating and Scheduling (RBCCES) System, {\it Proceedings of the ASC 51st Annual International Conference}, 8 pages, College Station, TX, April 22-25, 2015.
+
+\item Travis~Losser, Lixin~Li, Reinhard~Piltner, 
+A Spatiotemporal Interpolation Method Using Radial Basis Functions for Geospatiotemporal Big Data, 
+{\it Proceedings of the Fifth International Conference on Computing for Geospatial Research and Application}, 17-24, Washington DC, IEEE, August 2014.
+
+\item Seonghoon~Kim, Marcel~Maghiar, Lixin~Li, Yong~Bai, Jason~Scott,
+Developing a Knowledge Based Information System (KISCCES) for 
+Construction Cost Estimating and Scheduling, {\it Proceedings of 2014 Construction Research Congress (CRC 2014)}, 887-896, Atlanta, GA, May 2014.
+
+\item Cheryl~Aasheim, Paige~Rutner, Lixin~Li, Attitudes on Plagiarism in 
+Programming Courses: Results from a Survey on Student Perceptions, 
+{\it Proceedings of 2012 Southeast Decision Sciences Institute (SEDSI) Conference}, 
+166-176, Columbia, SC, March 2012.
+
+\item Lixin~Li, Xingyou~Zhang, James~Holt, Jie~Tian, Reinhard~Piltner, 
+Spatiotemporal Interpolation Methods for Air Pollution Exposure, 
+{\it Proceedings of the Ninth Symposium on Abstraction, Reformulation, and Approximation }, 
+75-81, Parador de Cardona, Spain, AAAI (Association for the Advancement of Artificial Intelligence), July 2011.
+
+\item Cheryl~Aasheim, Lixin~Li, Jordan~Shropshire, Christopher~Kadlec, 
+IT Program Curriculum Recommendations Based on a Survey of Knowledge 
+and Skill Requirements for Entry-Level IT Workers,  {\it Proceedings of 2011 
+Southeastern INFORMS (Institute for Operations Research and the Management Sciences)}, 
+209-221, Myrtle Beach, SC, October 2011.
+
+\item Cheryl~Aasheim, Paige~Rutner, Lixin~Li, 
+Exploring Student Attitudes towards Plagiarism: Does the Type of Work Matter? 
+{\it Proceedings of 2011 Southeast Decision Sciences Institute (SEDSI) Conference}, 
+211-220, Savannah, GA, February 2011.
+
+\item Cheryl~Aasheim, Lixin~Li, Paige~Rutner, Susan~Williams, 
+A Survey of Student Attitudes on Plagiarism in Programming Courses, 
+{\it Proceedings of 2010 Southeastern INFORMS (Institute for Operations 
+Research and the Management Sciences)}, 85-90, Myrtle Beach, SC, 
+October 2010.
+
+\item Lixin~Li, Xingyou~Zhang, Reinhard~Piltner, Comparison of Deterministic 
+and Stochastic Spatiotemporal Interpolation Methods for Ozone in the 
+Conterminous U.S., {\it Proceedings of the 2009 Joint Statistical Meetings}, 
+377, Washington, DC, August 2009.
+
+\item Reinhard~Piltner, Lixin~Li, Solving plate bending problems with 
+discretized Cauchy integrals, {\it Proceedings of the Tenth US National 
+Congress on Computational Mechanics}, Columbus, Ohio, July 2009.
+
+\item Cheryl~Aasheim, Lixin~Li, Curriculum recommendations for 
+Information Technology related degrees, {\it Proceedings of 2008 
+Southeastern INFORMS (Institute for Operations Research and 
+the Management Sciences)}, 441-447, Myrtle Beach, SC, October 2008.
+
+\item Reinhard~Piltner, Lixin~Li, Utilizing discretized Cauchy
+integrals for the Trefftz method, {\it Proceedings of the Fifth
+Workshop on Trefftz Methods}, 339-347, Leuven, Belgium, March 2008.
+
+\item Reinhard~Piltner, Lixin~Li, The Use of Discretized Cauchy
+Integrals for Finite Elements, {\it Proceedings of the Ninth US
+National Congress on Computational Mechanics}, 222, San Francisco, CA,
+July 2007.
+
+\item Lixin~Li and Xingyou~Zhang, Estimation of Population
+Exposure to Ozone Using Shape Function Interpolation Methods, {\it
+Proceedings of the Second National Conference on USGS
+Health-Related Research}, 43, Reston, VA, U.S. Geological Survey,
+February 2007.
+
+\item Lixin~Li, Xingyou~Zhang and Reinhard~Piltner, A
+Spatiotemporal Database for Ozone in the Conterminous U.S., {\it
+Proceedings of the 13th International Symposium on Temporal
+Representation and Reasoning}, 168-176, Budapest, Hungary, IEEE,
+June 2006 (acceptance rate 54\%).
+
+\item Naijun~Zhou and Lixin~Li, Applying the MultiAgent Technology
+for Distributed Geospatial Information Services, {\it Proceedings
+of 2005 IEEE-ICDM Workshop on MultiAgent Data Warehousing and
+MultiAgent Data Mining}, 62-66, Houston, Texas, IEEE, November
+2005.
+
+\item Reinhard~Piltner and Lixin~Li, Image based Modeling of
+Abdominal Aortic Aneurysms, {\it Proceedings of the Second SECABC
+Fall Workshop on Biocomputing}, 14-15, Atlanta, GA, Georgia State
+University, October 2005.
+
+\item Reinhard~Piltner and Lixin~Li, A Comparison of
+Mixed-enhanced Finite Elements, {\it Proceedings of the Third MIT
+Conference on Computational Fluid and Solid Mechanics}, 301,
+Cambridge, MA, Massachusetts Institute of Technology, June 2005.
+
+\item Wei~Tu, Lixin~Li and Reinhard~Piltner, A Study of Smart
+Growth Initiatives using GIS: The case of Austin, Texas, {\it
+Proceedings of the Sixth Annual National Conference on Digital
+Government Research}, 267-268, Atlanta, GA, Digital Government
+Research Center, May 2005.
+
+\item Lixin~Li and Reinhard~Piltner, Voronoi Region-Based
+Spatiotemporal GIS Databases, {\it Proceedings of the Fifth Annual
+National Conference on Digital Government Research}, 355-356,
+Seattle, WA, Digital Government Research Center, May 2004.
+
+\item Lixin~Li and Peter~Revesz, The Relationship among
+GIS-Oriented Spatiotemporal Databases, {\it Proceedings of the
+Fourth Annual National Conference on Digital Government Research},
+375-378, Boston, MA, Digital Government Research Center, May 2003.
+
+\item Peter~Revesz and Lixin~Li, Constraint-Based Visualization of
+Spatial Interpolation Data, {\it Proceedings of the Sixth
+International Conference on Information Visualization}, 563-569,
+London, England, IEEE, July 2002.
+
+\item Peter~Revesz and Lixin~Li, Representation and Querying of
+Interpolation Data in Constraint Databases, {\it Proceedings of
+the Third Annual National Conference on Digital Government
+Research}, 225-228, Los Angeles, CA, Digital Government Research
+Center, May 2002.
+
+\end{bibenum}
+
+\section{Other Conference Proceedings}
+
+\begin{bibenum}
+
+\item Lixin~Li, Time scale choices on shape function-based spatiotemporal interpolation 
+method for evaluating population exposure to fine particulate matter pollution, {\it Proceedings of 
+the American Mathematics Society (AMS) 2011 Fall Central Section Meeting}, 99, Lincoln, NE, October 2011.
+\label{non-peer-view3}
+
+\item Reinhard~Piltner, Lixin~Li, Mixed-enhanced quadrilateral finite elements with Wachspress-type functions,
+{\it Proceedings of the American Mathematics Society (AMS) 2011 Fall Central Section Meeting}, 99, Lincoln, NE, October 2011.
+\label{non-peer-view4}
+
+\item Derek~Ratcliff, Lixin~Li, Robert~Cook, Measuring the Impact of Time Scale Choice on Spatiotemporal Interpolation using Parallel Computing, {\it Proceedings of the American Mathematics Society (AMS) 2011 Fall Central Section Meeting}, 98, Lincoln, NE, October 2011.
+\label{non-peer-view5}
+
+\item Lixin~Li, Xingyou~Zhang, Reinhard~Piltner, Spatiotemporal
+Interpolation and Constraint Databases for a GIS Application:
+Ozone in the Contiguous U.S., {\it Proceedings of the
+Dagstuhl-Seminar on Constraint Databases, Geometric Elimination
+and GIS}, 5, Dagstuhl, Germany, May 2007. \label{non-peer-view1}
+
+\item Lixin~Li and Peter~Revesz, Visualization for Temporally
+Changing 3D Data, {\it Proceedings of the Third Annual Midwest
+Meeting of the American Association for the Advancement of
+Science},  21, Omaha, NE, American Association for the Advancement
+of Science, November 2002. \label{non-peer-view2}
+
+\end{bibenum}
+
+\section{Conference Presentations}
+
+
+\begin{bibenum}
+
+\item \u{Seonghoon~Kim}\footnote{Presenting author is underlined.}, Lixin~Li, Haebum~Yun, Liuliu~Wu, Yong~Bai, Adam~Vaclavik, Developing a Real-Time Basis Construction Cost Estimating and Scheduling (RBCCES) System, {\it ASC 51st Annual International Conference}, College Station, TX, April 2015.
+
+\item Travis~Losser, \u{Lixin~Li}, Reinhard~Piltner, A Spatiotemporal Interpolation Method Using Radial Basis Functions for Geospatiotemporal Big Data, {\it Fifth International Conference on Computing for Geospatial Research and Application},  Washington DC, IEEE, August 2014.
+
+\item \u{Seonghoon~Kim}, Marcel~Maghiar, Lixin~Li, Yong~Bai, Jason~Scott,
+Developing a Knowledge Based Information System (KISCCES) for 
+Construction Cost Estimating and Scheduling, {\it 2014 Construction Research Congress (CRC 2014)}, 
+Atlanta, GA, May 2014.
+
+\item Seonghoon~Kim, Marcel~Maghiar, Lixin~Li, Jason~Scott, \u{Adam~Vaclavik}, Developing a Real-Time Basis Cost Estimating and Scheduling (RBCCES) System for Construction Project Management, {\it Georgia Southern University Research Symposium}, Statesboro, GA, April 2014.
+
+\item \u{Reinhard~Piltner}, Lixin~Li, 
+Constructing Harmonic and Biharmonic Functions for Plane Deformations in a Snake Segmentation Tool,
+{\it MAG 2013}, Pattern Recognition Lab, Friedrich-Alexander University of Erlangen-Nuremberg, Erlangen, Germany,
+April 2013.
+
+\item \u{Cheryl~Aasheim}, Paige~Rutner, Lixin~Li, Attitudes on Plagiarism in 
+Programming Courses: Results from a Survey on Student Perceptions, 
+{\it 2012 Southeast Decision Sciences Institute (SEDSI) Conference}, 
+Columbia, SC, March 2012.
+
+\item \u{Lixin~Li}, Time scale choices on shape function-based spatiotemporal 
+interpolation method for evaluating population exposure to fine particulate matter pollution, 
+{\it The American Mathematics Society (AMS) 2011 Fall Central Section Meeting},
+Lincoln, Nebraska, October 2011.
+
+\item Derek~Ratcliff, \u{Lixin~Li}, Robert~Cook, 
+Measuring the Impact of Time Scale Choice on Spatiotemporal Interpolation using Parallel Computing,
+{\it The American Mathematics Society (AMS) 2011 Fall Central Section Meeting},
+Lincoln, Nebraska, October 2011.
+
+\item \u{Reinhard~Piltner}, Lixin~Li, 
+Mixed-enhanced quadrilateral finite elements with Wachspress-type functions,
+{\it The American Mathematics Society (AMS) 2011 Fall Central Section Meeting},
+Lincoln, Nebraska, October 2011.
+
+\item  \u{Cheryl~Aasheim}, Lixin~Li, Jordan~Shropshire, Christopher~Kadlec, 
+IT Program Curriculum Recommendations Based on a Survey of Knowledge 
+and Skill Requirements for Entry-Level IT Workers,  {\it 2011 
+Southeastern INFORMS (Institute for Operations Research and the Management Sciences)}, 
+Myrtle Beach, SC, October 2011.
+
+\item \u{Lixin~Li},  Xingyou~Zhang, James~Bolt, Jie~Tian, Reinhard~Piltner,
+Spatiotemporal Interpolation Methods for Air Pollution Exposure, 
+{\it Thirteenth International Symposium on Temporal Representation and Reasoning},
+AAAI (Association for the Advancement of Artificial Intelligence), Parador de Cardona, Spain, July 2011.
+
+\item \u{Cheryl~Aasheim}, Paige~Rutner, Lixin~Li, 
+Exploring Student Attitudes towards Plagiarism: Does the Type of Work Matter? 
+{\it 2011 Southeast Decision Sciences Institute (SEDSI) Conference}, 
+Savannah, GA, February 2011.
+
+\item \u{Cheryl~Aasheim}, Lixin~Li, Paige~Rutner, Susan~Williams, 
+A Survey of Student Attitudes on Plagiarism in Programming Courses, 
+{\it Southeastern INFORMS (Institute for Operations 
+Research and the Management Sciences)}, Myrtle Beach, SC, 
+October 2010.
+
+\item \u{Lixin~Li},  Xingyou~Zhang, Reinhard~Piltner, 
+Comparison of Deterministic and Stochastic Spatiotemporal Interpolation Methods for Ozone in the Conterminous U.S., 
+{\it 2009 Joint Statistical Meetings}, Washington, DC, August 2009.
+
+\item \u{Reinhard~Piltner}, Lixin~Li, 
+Solving plate bending problems with discretized Cauchy integrals,
+{\it 10th US National Congress on Computational Mechanics},
+Ohio State University, Columbus, Ohio, July 2009.
+
+\item \u{Cheryl~Aasheim}, Lixin~Li, Curriculum recommendations for 
+Information Technology related degrees, {\it 2008 
+Southeastern INFORMS (Institute for Operations Research and 
+the Management Sciences)}, Myrtle Beach, SC, October 2008.
+
+\item \u{Reinhard~Piltner}, Lixin~Li, Utilizing discretized Cauchy integrals for the Trefftz method,
+{\it 5th Workshop on Trefftz Methods}, Katholieke Universiteit Leuven, Leuven, Belgium, April 2008.
+
+\item \u{Reinhard~Piltner}, Lixin~Li, The Use of Discretized
+Cauchy Integrals for Finite Elements, {\it Ninth US National
+Congress on Computational Mechanics}, San Francisco, CA, July
+2007.
+
+\item \u{Lixin~Li}, Xingyou~Zhang, Reinhard~Piltner,
+Spatiotemporal Interpolation and Constraint Databases for a GIS
+Application: Ozone in the Contiguous U.S., {\it Dagstuhl-Seminar
+on Constraint Databases, Geometric Elimination and GIS}, Dagstuhl,
+Germany, May 2007.
+
+\item \u{Lixin~Li} and Xingyou~Zhang, Estimation of Population
+Exposure to Ozone Using Shape Function Interpolation Methods, {\it
+Second National Conference on USGS Health-Related Research},
+Reston, VA, U.S. Geological Survey, February 2007.
+
+\item Lixin~Li, Xingyou~Zhang and Reinhard~Piltner, A
+Spatiotemporal Database for Ozone in the Conterminous U.S., {\it
+13th International Symposium on Temporal Representation and
+Reasoning}, Budapest, Hungary, IEEE, June 2006, presented by
+\u{Peter~Revesz}.
+
+\item Naijun~Zhou and \u{Lixin~Li}, Applying the MultiAgent
+Technology for Distributed Geospatial Information Services, {\it
+2005 IEEE-ICDM Workshop on MultiAgent Data Warehousing and
+MultiAgent Data Mining}, Houston, Texas, November 2005.
+
+\item \u{Reinhard~Piltner} and Lixin~Li, Image based Modeling of
+Abdominal Aortic Aneurysms, {\it Second SECABC Fall Workshop on
+Biocomputing}, Atlanta, GA, October 2005.
+
+\item \u{Reinhard~Piltner} and Lixin~Li, A Comparison of
+Mixed-enhanced Finite Elements, {\it Third MIT Conference on
+Computational Fluid and Solid Mechanics}, Cambridge, MA, June
+2005.
+
+\item Wei~Tu, \u{Lixin~Li} and Reinhard~Piltner, A Study of Smart
+Growth Initiatives using GIS: The case of Austin, Texas, {\it
+Sixth Annual National Conference on Digital Government Research},
+Atlanta, GA, May 2005.
+
+\item \u{Lixin~Li}, Youming~Li and Reinhard~Piltner, A New Shape
+Function Based Spatiotemporal Interpolation Method, {\it First
+International Symposium on Applications of Constraint Databases in
+conjunction with SIGMOD-PODS}, Paris, France, June 2004.
+
+\item \u{Lixin~Li} and Reinhard~Piltner, Voronoi Region-Based
+Spatiotemporal GIS Databases, {\it Fifth Annual National
+Conference on Digital Government Research}, Seattle, WA, May 2004.
+
+\item \u{Lixin~Li} and Peter~Revesz, The Relationship among
+GIS-Oriented Spatiotemporal Databases, {\it Fourth Annual National
+Conference on Digital Government Research}, Boston, MA, May 2003.
+
+\item \u{Lixin~Li} and Peter~Revesz, Visualization for Temporally
+Changing 3D Data, {\it Third  Annual Midwest Meeting of the
+American Association for the Advancement of Science}, Omaha, NE,
+November 2002.
+
+\item Lixin~Li and \u{Peter~Revesz}, A Comparison of Two
+Spatio-Temporal Interpolation Methods, {\it Second International
+Conference on GIScience}, Boulder, CO, September 2002.
+
+\item \u{Peter~Revesz} and Lixin~Li, Constraint-Based
+Visualization of Spatial Interpolation Data, {\it Sixth
+International Conference on Information Visualization}, London,
+England, July 2002.
+
+\item Peter~Revesz and \u{Lixin~Li}, Representation and Querying
+of Interpolation Data in Constraint Databases, {\it Third Annual
+National Conference on Digital Government Research}, Los Angeles,
+CA, May 2002.
+
+\end{bibenum}
+
+\section{Invited Talks}
+
+\begin{bibenum}
+
+\item \u{Lixin~Li}, Spatiotemporal Interpolation and Constraint Databases for GIS Applications, Friedrich-Alexander University of Erlangen-Nuremberg, Erlangen, Germany, October 1, 2012.
+
+\end{bibenum}
+
+\section{Grants}
+\restartlist{bibenum}
+
+\begin{bibenum}
+
+\item Lixin~Li (PI), {\bf Computer Sciences Faculty Research Seed Grant},  
+  {\it Developing a new interpolation method for surface-based motion compensated 
+  tomographic reconstruction for cardiac angiographic C-arm data},  Allen E. Paulson College of Engineering
+   \& Information Technology, Georgia Southern University, \$5,000, 2013, funded.
+
+\item Seonghoon~Kim (PI), Marcel~Maghiar (Co-PI) and Lixin~Li (Co-PI),
+ {\bf CEIT College Faculty Research Seed Grant},  
+  {\it Developing a Knowledge-Based Information System for Construction Cost Estimating and Scheduling (KISCCES)}, 
+  Allen E. Paulson College of Engineering \& Information Technology, Georgia Southern University, \$9,979, 2013, funded.
+
+\item Cheryl~Aasheim (PI), Lixin~Li (Co-PI), Christopher~Kadlec (Co-PI) and Jordan~Shropshire (Co-PI),
+ {\bf Faculty Research Grant at Georgia Southern University}, 
+ {\it 2010 IT Knowledge and Skills Assessment: A Survey of IT Employers}, 
+ \$7,000.50, 2010 - 2011, funded.
+
+\item Reinhard~Piltner (PI) and Lixin~Li (Co-PI), {\bf Faculty
+Research Grant at Georgia Southern University}, {\it Computational
+Modeling for Biomedical Applications Using Methods from
+Biomathematics/Bioengineering/Bioinformatics}, \$6,590, 2004-2005,
+funded.
+
+\end{bibenum}
+
+\section{Teaching Experience}
+
+\href{http://www.georgiasouthern.edu/}{\textbf{Georgia Southern University}}, Statesboro, GA
+\hfill \textbf{August 2003-present}
+
+\begin{outerlist}
+
+\item Intro to Java Programming
+\item Programming Principles I
+\item Programming Principles II
+\item Theoretical Foundations
+\item Database Systems
+\item Advanced Database Systems
+\item Distributed Database Systems
+\item Geographic Information Systems
+\item Knowledge Processing for GIS Data
+\item Human Computer Interaction
+\item Directed Study in Computer Science
+
+\end{outerlist}
+
+
+\section{Academic Service}
+
+\href{http://ceit.georgiasouthern.edu/cs/degrees/mscs/}{\textbf{Director, MS in Computer Science}}, Georgia Southern University
+\hfill \textbf{April 2010-April 2014}
+
+\halfblankline
+
+Dr.~Li was the founding director of the online MS in Computer Science program (MSCS) at Georgia Southern University from 2010 to 2014. She was the graduate students' point of contact from their application to graduation. The program grew from an initial enrollment of 11 students in Fall 2010 to 58 students in Fall 2013.  It is shown by various national awards that the program has not only grown in quantity, but also in quality.  Dr.~Li's main responsibilities, as well as the rankings \& recognitions earned by the program, are listed below.
+
+\begin{outerlist}
+
+\item Recruiting
+\begin{innerlist}
+\item [--]Responded to inquiries from all potential students.
+\item[--]Helped with marketing strategies to advertise the program on various websites and cable TV.  
+\end{innerlist}
+
+\item Admission
+\begin{innerlist}
+\item[--] Worked with the College of Graduate Studies to process applications in an efficient and timely manner.
+\item[--] Led the Computer Science Department Graduate Committee to review all graduate applications.
+\item[--] Responded to inquiries from students related to the admission process.
+\item[--] Notified students admission decisions.
+\end{innerlist}
+
+\item Orientation
+\begin{innerlist}
+\item[--] Organized face-to-face orientations in January 2011 (Statesboro, GA), January 2012 (Atlanta, GA) and August 2012 (Atlanta, GA).  
+\end{innerlist}
+
+\item Retention/Progression
+\begin{innerlist}
+\item[--] Advised all students and personally register them for classes every semester. The number of students actually registered for classes in Fall 2013 reached 58.
+\item[--] Responded to questions and concerns from students and faculty.
+\item[--] Worked with the College of Graduate Studies to help students progress, including approving the Masters Program of Study for all students.
+\end{innerlist}
+
+\item Graduation
+\begin{innerlist}
+\item[--] Cleared all students for graduation.
+\item[--] Scheduled and announced all students' thesis defenses and project presentations.
+\item[--]  Organized on-campus graduation receptions.
+\end{innerlist}
+
+\item Assessment reports
+\begin{innerlist}
+\item[--] Wrote successful MSCS SACS (Southern Association of Colleges and Schools) assessment reports for the 2011-2012 and 2012-2013 cycles. 
+\end{innerlist}
+
+\item Committees
+\begin{innerlist}
+\item[--] Served as chair and member in many graduate project and thesis committees.
+\end{innerlist}
+
+\item Rankings and Recognitions
+\begin{innerlist}
+\item[--] U.S. News \& World Report recognized the MS in Computer Science program at Georgia Southern University as a ``2014 Best Online Program''.  The program was ranked as 15th for best online graduate computer information technology program.
+
+\item[--] The MS in Computer Science program at Georgia Southern University won \href{http://www.geteducated.com/online-college-ratings-and-rankings/best-buy-lists/online-masters-computer-science-it-degree}{the best Online Masters Computer Science \& IT award from GetEducated.com}, ranked as 13th in the U.S. out of a total of 115 online master's in computer science in Spring 2013. GetEducated.com is an education web site that publishes online college rankings and online university ratings along the dimensions that matter most to online students themselves: affordability and credibility\footnote{ Please see details of this award at http://www.geteducated.com/online-college-ratings-and-rankings/best-buy-lists/online-masters-computer-science-it-degree.}. 
+
+\item[--] U.S. News \& World Report recognized the MS in Computer Science program at Georgia Southern University as a top online graduate Computer Information Technology program by U.S. News \& World Report in 2012.  The program was ranked in the top 25 nationally for student services and technology, in the top 10 for teaching practices and student engagement and in the top five for admissions selectivity. 
+
+\item[--] The MS in Computer Science program at Georgia Southern University made the Top Ten list of ``Best Buys'' from GetEducated.com for the year of 2011. It was ranked 9th over 140 online MS degrees in Computer Science or Information Technology/Information Systems related areas. 
+\end{innerlist}
+
+\end{outerlist}
+
+\section{Professional Service}
+
+\textbf{Conference Service}
+\begin{innerlist}
+    \item Reviewer, Southeast Decision Sciences Institute, Columbia Conference, 2012
+    \item Program Committee member and reviewer, Fourteenth International Symposium on Temporal Representation and Reasoning, Alicante, Spain, 2007
+    \item Program Committee member and reviewer, Thirteenth International Symposium on Temporal Representation and Reasoning, Budapest, Hungary, 2006
+    \item Program Committee member and reviewer, First International Symposium on Applications of Constraint Databases in conjunction with SIGMOD-PODS, Paris, France, 2004
+\end{innerlist}
+
+\halfblankline
+
+\textbf{Journal \& Other Reviewer Service}
+\begin{innerlist}
+    \item Reviewer for {\it International Journal of Information Engineering}
+    \item Reviewer for {\it Constraints}
+    \item Reviewer for {\it IEEE Transactions on Knowledge and Data Engineering}
+    \item External Reviewer for Tenure/Promotion, Northern Arizona University
+\end{innerlist}
+
+\section{Other Service}
+
+\href{http://www.georgiasouthern.edu/}{\textbf{Georgia Southern University}},
+Statesboro, GA
+\begin{outerlist}
+
+    \item[] \textit{University}
+    
+           \begin{innerlist}
+		\item[--] Member, Faculty Welfare Committee \hfill{2014-2016}
+		\item[--] Member, Distance Education Advisory Meeting \hfill{2014-2015}
+		\item[--] Faculty Senate Alternate \hfill{2014-2015}
+		\item[--] Member, Graduate Education Task Force \hfill{2010-2012}
+		\item[--]  Member, Dean Search Committee of College of Engineering and IT \hfill{2012}
+		\item[--]  Member, Boren Campus Interview Committee for university Honor Program  \hfill{2012}
+		\item[--]  Representative, MS in CS, University Graduate School Fair \hfill{2010-2011}
+		\item[--]  Member, Dean Search Committee of College of Information Technology \hfill{2009-2010}
+		\item[--]  Alternate, Faculty Senate \hfill{2006-2008}
+		\item[--]  Member, Graduate Committee \hfill{2007-2008}
+		\item[--]  Member, Faculty Welfare Committee \hfill{2007-2008}
+		\item[--]  Member, Faculty Grievance Committee \hfill{2006-2007}
+		\item[--]  Member, Senate Academic Standards Committee \hfill{2003-2005}
+		\item[--]  Attendee, Commencement Ceremonies  \hfill{2004-2014}
+           \end{innerlist}
+    
+    \item[] \textit{College}
+    
+           \begin{innerlist}
+		\item[--] Member, Curriculum Committee  \hfill{2013-2014}
+		\item[--] Volunteer, College of IT Low Country Boil and BBQ  \hfill{2010-2011}
+		\item[--] Chair, College of IT Distinguished Research Award Committee \hfill{2010}
+		\item[--] Chair, Fourth College of IT Golf Tournament Committee  \hfill{2008}
+		\item[--] Member, Student and Instructional Resource Committee  \hfill{2005-2008}
+		\item[--] Member, Third College of IT Golf Tournament Committee  \hfill{2006}
+		\item[--] Member, Chair Search Committee of Computer Sciences Department  \hfill{2004-2005}
+		\item[--] Member, Graduate Curriculum and Programs Committee  \hfill{2003-2005}
+		\item[--] Volunteer, College of IT on university's annual scholars' day \hfill{2005-2006}
+		\item[--] Volunteer, Second College of IT Golf Tournament  \hfill{2005}
+           \end{innerlist}
+
+    \item[] \textit{Department}
+    
+           \begin{innerlist}
+		\item[--] Chair, Tenure \& Promotion Committee \hfill{2015-2016}
+		\item[--] Chair, Computer Science Assistant Professor Search Committee \hfill{2014-2015}
+		\item[--] Chair, Graduate Curriculum Committee \hfill{2011-2014}
+		\item[--] Chair, Library Committee \hfill{2010-2012}
+		\item[--] Member, Computer Science Assistant Professor Search Committee \hfill{2011}
+		\item[--] Member, Computer Science Department Secretary Search Committee \hfill{2011}
+		\item[--] Member, Graduate Curriculum Committee \hfill{2010-2011}
+		\item[--] Member, Peer Review Committee \hfill{2010-2011}
+		\item[--] Member, Web Site and Advertising Committee \hfill{2010-2011}
+		\item[--] Volunteer, ACM SER Programming Contest \hfill{2011}
+		\item[--] Attendee, Georgia WebMBA Orientation \hfill{2010}
+		\item[--] Member, Library Committee \hfill{2008-2010}
+		\item[--] Chair, Assessment Committee \hfill{2006-2007}
+		\item[--] Member, Assessment Committee \hfill{2005-2006}
+		\item[--] Member, Curriculum Committee \hfill{2003-2005}
+           \end{innerlist}
+
+\end{outerlist}
+
+\vspace{-0.5mm}
+
+\section{Awards}
+
+\begin{innerlist}
+\item Listed in Marquis Who's Who in America, 65th Edition 2011, 67th Edition 2013, 68th Edition 2014, 69th Edition 2015; Marquis Who's Who of American Women, 27th Edition 2008-2009, 28th Edition 2010-2011.
+\item Summer Research Award, College of IT, Georgia Southern University, 2009-2012.
+\item Researcher of the Year, College of IT, Georgia Southern University, 2007.
+\item Outstanding Ph.D. Award, Department of Computer Science and Engineering, University of Nebraska-Lincoln, May 2003.
+\end{innerlist}
+
+% \section{Citizenship}
+%
+% USA
+
+\section{References Available to Contact}
+
+%\href
+%{http://ceit.georgiasouthern.edu/it/faculty/art-gowan}
+%{\textbf{Dr.~Art~Gowan}} 
+%\begin{innerlist}
+%    \item[] \textit{\u{Current contact through 2014:}}
+%    \begin{innerlist}
+%    \item[] Department Chair \& Professor
+%    \item[] \href{http://ceit.georgiasouthern.edu/it/}{Department of Information Technology}
+%    \item[] \href{http://ceit.georgiasouthern.edu/}{Allen E. Paulson College of Engineering \& Information Technology}
+%    \item[] \href{http://www.georgiasouthern.edu/}{Georgia Southern University}
+%    \item[] Statesboro, GA 30460-8150
+%    \item[]  \textit{E\-/mail}:~\href{mailto:artgowan@georgiasouthern.edu}{artgowan@georgiasouthern.edu}
+%    \item[] \textit{Phone}:~+1-912-478-7679 (office), +1-912-687-4053 (mobile)
+%    \item[]  \textit{Web}:~\href{http://ceit.georgiasouthern.edu/it/faculty/art-gowan}{http://ceit.georgiasouthern.edu/it/faculty/art-gowan}
+%     \end{innerlist}
+%     \smallskip
+%     \item[] \textit{\u{Contact starting January 2015:}}
+%      \begin{innerlist}
+%    \item[] Department Head \& Professor, R. Jarl Bliss Faculty Fellow
+%    \item[] \href{http://www.jmu.edu/cob/cis/index.shtml}{Department of Computer Information Systems and Business Analytics}    
+%    \item[] \href{http://www.jmu.edu/cob/index.shtml}{College of Business}
+%    \item[] \href{http://www.jmu.edu}{James Madison University}
+%    \item[] Harrisonburg, Virginia 22807
+%    \item[]  \textit{E\-/mail}:~\href{mailto:gowanja@jmu.edu}{gowanja@jmu.edu}
+%    \item[] \textit{Phone}:~+1-540-568-3019 (office), +1-912-687-4053 (mobile)
+%     \end{innerlist}
+%\end{innerlist}
+
+{\textbf{Dr.~Ronald~Shiffler}}
+%(e\-/mail:~\href{mailto:shifflerr@queens.edu}{shifflerr@queens.edu}; phone:~+1-704-337-2234)
+%
+\begin{innerlist}
+   \item[] Dean Emeritus, College of Business Administration
+    \item[] Georgia Southern University
+    \item[] 13236 Belle Grove Manor Lane
+    \item[] Matthews, NC  28105
+    \item[] \textit{E\-/mail}:~\href{mailto:shiffler@georgiasouthern.edu}{shiffler@georgiasouthern.edu}
+    %\item[$\diamond$] McColl School of Business, Sykes 127, Queens University of Charlotte, Charlotte, NC 28274
+    %\item[$\star$] \emph{Dr.~Shiffler was my supervisor at Georgia Southern University when he was the Dean of the College of Information Technology.}
+\end{innerlist}
+
+\halfblankline
+
+{\textbf{Dr.~Wen-Ran~Zhang}}
+%
+\begin{innerlist}
+    \item[] Professor
+    \item[] \href{http://ceit.georgiasouthern.edu/cs/}{Department of Computer Sciences}
+    \item[] \href{http://ceit.georgiasouthern.edu}{Allen E. Paulson College of Engineering \& Information Technology}
+    \item[] \href{http://www.georgiasouthern.edu/}{Georgia Southern University}
+    \item[] Statesboro, GA 30460-7997
+    \item[]  \textit{E\-/mail}:~\href{mailto:wrzhang@georgiasouthern.edu}{wrzhang@georgiasouthern.edu}
+    \item[] \textit{Phone}:~912-478-7198 (office)
+
+    %\item[$\star$] \emph{Dr.~Zhang is currently my colleague at Georgia Southern University.}
+\end{innerlist}
+
+\halfblankline
+
+{\textbf{Dr.~Cheryl~Aasheim}}
+%
+\begin{innerlist}
+    \item[] Professor
+    \item[] \href{http://ceit.georgiasouthern.edu/it/}{Department of Information Technology}
+    \item[] \href{http://ceit.georgiasouthern.edu}{Allen E. Paulson College of Engineering \& Information Technology}
+    \item[] \href{http://www.georgiasouthern.edu/}{Georgia Southern University}
+    \item[] Statesboro, GA 30460-7997
+    \item[]  \textit{E\-/mail}:~\href{mailto:caasheim@georgiasouthern.edu}{caasheim@georgiasouthern.edu}
+    \item[] \textit{Phone}:~912-478-5165 (office)
+\end{innerlist}
+
+\halfblankline
+
+\href
+{https://www.jmu.edu/cob/faculty/all-faculty/gowan-art.shtml}
+{\textbf{Dr.~Art~Gowan}}
+%
+\begin{innerlist}
+    \item[] Department Head and R. Jarl Bliss Faculty Scholar
+    \item[] Department of Computer Information Systems and Business Analytics
+    \item[] James Madison University
+    \item[] Harrisonburg, VA  22807
+    \item[]  \textit{E\-/mail}:~\href{mailto:gowanja@jmu.edu}{gowanja@jmu.edu}
+    \item[] \textit{Phone}:~540-568-8796 (office), 912-687-4053 (mobile)
+
+    %\item[$\star$] \emph{Dr.~Bradford was my colleague at Georgia Southern University before he retired in May 2014.  He was the founding Dean of the College of Information Technology when I was hired by Georgia Southern in 2003.}
+\end{innerlist}
+
+\halfblankline
+
+\href
+{http://www.professorcook.org}
+{\textbf{Dr.~Robert~Cook}}
+\begin{innerlist}
+    \item[] Professor (retired)
+   \item[] Department of Computer Sciences
+    \item[] Georgia Southern University
+    \item[] 665 Hidden Oaks Drive
+    \item[] Flintstone, GA 30725
+     \item[] \textit{E\-/mail}:~\href{mailto:bobcook47@hotmail.com}{bobcook47@hotmail.com}
+    \item[] \textit{Phone}:~912-541-0235 (mobile)
+  \end{innerlist}
+
+% The ``More Info'' section may not be necessary; make sure it's short
+% so it doesn't prevent people from seeing references available to
+% contact.
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
